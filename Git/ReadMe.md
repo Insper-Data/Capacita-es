@@ -79,7 +79,7 @@ Edite o texto do arquivo utilizando o Rstudio ou um editor de texto.
 **git status** - Informa quais arquivos foram colocados na área de pré-processamente.
 
 **8. Atualizar repositório local com mudanças da áre de pré-processamento:**\
-**git commit -m** **"** *mensagem explicando mudanças feitas* **"
+**git commit -m** **"** *mensagem explicando mudanças feitas* "
 
 **9. Atualizar repositório do Github em relação ao repositório local:**\
 **git push** - Atualiza o código armazenado na nuvem com as mudanças realizadas localmente.
