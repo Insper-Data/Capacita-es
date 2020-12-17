@@ -18,4 +18,4 @@ Veja mais exemplos em https://www.r-graph-gallery.com/
 ![alt text](https://www.r-graph-gallery.com/175-choropleth-map-cartography-pkg_files/figure-html/thecode-1.png)
 
 ## ggplot2
-![alt text](https://ih1.redbubble.net/image.544023767.9060/flat,128x128,075,t.u2.jpg)
+![alt text](https://ih1.redbubble.net/image.543334423.1461/flat,128x128,075,f-pad,128x128,f8f8f8.u3.jpg)
