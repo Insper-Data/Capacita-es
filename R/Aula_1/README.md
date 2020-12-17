@@ -11,5 +11,7 @@ https://rstudio.com/products/rstudio/
 https://www.tiobe.com/tiobe-index/
 
 ## Exemplos de gráficos
+Veja mais exemplos em https://www.r-graph-gallery.com/ \
+
 ![alt text](https://www.r-graph-gallery.com/135-stacked-density-graph_files/figure-html/unnamed-chunk-6-1.png)
 ![alt text](https://www.r-graph-gallery.com/294-basic-ridgeline-plot_files/figure-html/unnamed-chunk-5-1.png)
