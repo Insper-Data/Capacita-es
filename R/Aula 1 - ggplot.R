@@ -1,133 +1,75 @@
-### Lógica inicial do R
+## Instalando tidyverse
+# install.packages("tidyverse")
+# install.packages("ggthemes")
+# install.packages("sf")
+# install.packages("spData")
+# install.packages("gapminder")
 
-## Por que o R é diferente de VBA?
-
-## Média no VBA
-
-x <- 1:10
-
-soma <- 0
-
-for (i in 1:10){
-  soma <- x[i] + soma
-}
-
-soma/length(x)
-
-# Média no R
-
-x <- 1:10
-
-mean(x)
-
-## Operações vetorizadas
-
-x <- 1:10
-
-# lógica no VBA/Python
-
-for (i in 1:10) {
-  x[i] = x[i] * 2
-}
-
-x
-
-# lógica no R --> linguagens vetorizadas
-
-x <- 1:10
-
-x * 2
-
-# Outro exemplo:
-
-# Lógica VBA/Python
-
-x <- 1:10
-y <- 31:40
-
-for (i in 1:10){
-  x[i] = x[i] + y[i]
-}
-
-x
-
-# Lógica R
-
-x <- 1:10
-y <- 31:40
-
-x + y
-
-## OperaçÕes com Data Frames
-
-z <- data.frame("gustavo" = 1:10,
-                "brunao" = 31:40)
-
-sapply(z, mean)
-
-
-###########################################################
-
-
-# install.packages('tidyverse')
-# install.packages('gapminder')
-# install.packages('ggthemes')
-
-library(gapminder)
+## Lendo pacotes
 library(tidyverse)
 library(ggthemes)
+library(gapminder)
 
-gap <- filter(gapminder, year == 1997)
+##################
+rm(list=ls())
+##################
 
+options(scipen=999) # Remove notação científica
+
+### gapminder
+gap = filter(gapminder, year == 1997)
+
+#1 - dispersão básica
 ggplot(data = gap) +
   geom_point(mapping = aes(x = gdpPercap, y = lifeExp))
 
+#2 - Separar continente por cor
 ggplot(data = gap) +
   geom_point(mapping = aes(x = gdpPercap, y = lifeExp, color = continent))
 
+#3 - Adicionar tamanho da população e escala logarítmica
 ggplot(data = gap) +
-  geom_point(mapping = aes(x = gdpPercap, y = lifeExp, 
-                           color = continent, size = pop)) +
+  geom_point(mapping = aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
   scale_x_log10()
 
+#4 - Geom text com label de nome dos países
 ggplot(data = gap) +
-  geom_text(mapping = aes(x = gdpPercap, y = lifeExp, 
-                          color = continent, size = pop,
-                          label = country)) +
+  geom_text(mapping = aes(x = gdpPercap, y = lifeExp, color = continent, size = pop, label = country)) +
   scale_x_log10()
 
-
-ggplot(data = gap) +
-  geom_text(mapping = aes(x = gdpPercap, y = lifeExp, 
-                          color = continent, size = pop,
-                          label = country)) +
-  scale_x_log10()
-
+#5 - Geom Smooth básico
 ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
   geom_point(mapping = aes(color = continent, size = pop)) +
   scale_x_log10() +
-  geom_smooth(se = FALSE, method = lm, mapping = aes(color = continent))
+  geom_smooth(se = FALSE, method = lm)
 
+#6 - Geom Smooth com grupos de cores
+ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(mapping = aes(color = continent, size = pop)) +
+  scale_x_log10() +
+  geom_smooth(se = FALSE, method = lm, mapping = aes(color=continent))
+
+#7 - Geom smooth com grupos e cor preta
 ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
   geom_point(mapping = aes(color = continent, size = pop)) +
   scale_x_log10() +
   geom_smooth(se = FALSE, method = lm, mapping = aes(group = continent), color = "black")
 
-
+#8 - Facet wrap de continentes
 ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
   geom_point(mapping = aes(color = continent, size = pop)) +
   scale_x_log10() +
   geom_smooth(se = FALSE, method = lm, mapping = aes(color = continent)) +
-  facet_wrap(vars(continent), scales = "free")
+  facet_wrap(~continent, scales = "free")
 
-
+#9 - Regressão com theme bw
 ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
   geom_point(mapping = aes(color = continent, size = pop)) +
   scale_x_log10() +
   geom_smooth(se = FALSE, method = lm, mapping = aes(group = continent), color = "black") +
   theme_bw()
 
-
+#10 - Theme do stata no facet wrap
 ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
   geom_point(mapping = aes(color = continent, size = pop)) +
   scale_x_log10() +
@@ -135,3 +77,28 @@ ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
   facet_wrap(vars(continent), scales = "free") +
   theme_stata()
 
+############################
+### Mapas
+
+## Lendo pacotes específicos para mapas
+library(sf)
+library(spData)
+
+## Lendo dataframe de explosões nucleares
+nuclear_explosions = read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-20/nuclear_explosions.csv")
+
+mundo = world # df world vem do pacote spData
+brasil = world[world$name_long=="Brazil",] # Exemplo de selecionar um país
+
+# Mapa em branco
+ggplot(data=brasil)+
+  geom_sf()
+
+# Vendo explosões nucleares no mundo
+ggplot() +
+  geom_sf(data=world, mapping=aes(geometry=geom)) +
+  geom_point(data=nuclear_explosions, aes(x=longitude, y=latitude, size=10*yield_lower, color=country), alpha=0.5)+
+  theme_map() +
+  scale_size_continuous(range = c(2, 10))+
+  theme(panel.background=element_rect(fill="gray"), legend.position = "bottom")+
+  labs(size="Explosion Magnitude in ktons of TNT", title="Nuclear Explosions Around the World")
