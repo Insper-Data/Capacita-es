@@ -39,7 +39,7 @@ Obs: Não confunda Git com Github. Git é a tecnologia de gerenciamento de vers�
 
 * **git diff** - Informa quais mudanças foram feitas no código do repositório local.
 
-* **git add** *NOME DO ARQUIVO* - Adiciona mudanças feitas no arquivo à área de pré-processamento. Para adicionar todas as mudanças utilizar "git add -A
+* **git add** *NOME DO ARQUIVO* - Adiciona mudanças feitas no arquivo à área de pré-processamento. Para adicionar todas as mudanças utilizar "git add -A"
 
 * **git status** - Informa quais arquivos foram colocados na área de pré-processamente.
 
